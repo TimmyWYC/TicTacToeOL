@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.tictactoeol.Navigation.TicTacToeNav
 import com.example.tictactoeol.ui.theme.TicTacToeOLTheme
 
 class MainActivity : ComponentActivity() {
@@ -19,7 +20,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             TicTacToeOLTheme {
-
+                TicTacToeNav()
             }
         }
     }
