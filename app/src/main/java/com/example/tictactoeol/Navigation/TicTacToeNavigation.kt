@@ -5,6 +5,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.tictactoeol.Screen.HomeScreen
+import com.example.tictactoeol.Screen.LobbyScreen
 
 @Composable
 fun TicTacToeNav(){
@@ -12,6 +13,7 @@ fun TicTacToeNav(){
 
     NavHost(navController = navController, startDestination = "Home") {
         composable("Home") { HomeScreen(navController)}
+        composable("Lobby") { LobbyScreen(navController)}
     }
 
 }
