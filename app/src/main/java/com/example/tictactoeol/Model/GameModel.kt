@@ -101,7 +101,7 @@ class GameModel: ViewModel(){
                     board[index] = 2
                     currentGameState = GameState.player1_turn.toString()
                 }
-                
+
                 val winner = checkForWinner(board.toList())
                 if (winner == 1) {
                     currentGameState = GameState.player1_won.toString()

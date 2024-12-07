@@ -1,6 +1,7 @@
 package com.example.tictactoeol.Screen
 
 import android.content.Context
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -29,11 +30,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.tictactoeol.DataClass.Player
+import com.example.tictactoeol.Model.GameModel
 import com.example.tictactoeol.R
 
 @Composable
-fun HomeScreen(navController: NavController){
-
+fun HomeScreen(navController: NavController, model: GameModel){
     // sharedPreferences can be used to store and retrieve small app data, like user preferences.
     val sharedPreferences = LocalContext.current
         .getSharedPreferences("TicTacToePrefs", Context.MODE_PRIVATE)
@@ -80,7 +82,20 @@ fun HomeScreen(navController: NavController){
             )
 
             Button(
-                onClick = { },
+                onClick = { if(playerName.isNotBlank()){
+                    // Create new player in Firestore
+                    val newPlayer = Player(name = playerName)
+                    model.db.collection("players")
+                        .add(newPlayer)
+                        .addOnSuccessListener { documentRef ->
+                            val newPlayerId = documentRef.id
+
+                            // Save and update player info
+                            sharedPreferences.edit().putString("playerId", newPlayerId).apply()
+                            model.localPlayerId.value = newPlayerId
+                            navController.navigate("Lobby")
+                        }
+                } },
                 shape = RectangleShape,
 
             ) {
