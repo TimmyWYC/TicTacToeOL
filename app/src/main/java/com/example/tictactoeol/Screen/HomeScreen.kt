@@ -14,6 +14,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -39,8 +40,14 @@ fun HomeScreen(navController: NavController, model: GameModel){
     // sharedPreferences can be used to store and retrieve small app data, like user preferences.
     val sharedPreferences = LocalContext.current
         .getSharedPreferences("TicTacToePrefs", Context.MODE_PRIVATE)
-
     var playerName by remember { mutableStateOf("") }
+
+    LaunchedEffect(Unit) {
+        model.localPlayerId.value = sharedPreferences.getString("playerId", null)
+        if (model.localPlayerId.value != null) {
+            navController.navigate("Lobby")
+        }
+    }
 
     Box(
         modifier = Modifier.fillMaxSize()
