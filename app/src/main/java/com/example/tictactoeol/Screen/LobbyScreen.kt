@@ -19,6 +19,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import com.example.tictactoeol.DataClass.Game
 import com.example.tictactoeol.Enum.GameState
 import com.example.tictactoeol.Model.GameModel
 import com.example.tictactoeol.R
@@ -28,6 +29,7 @@ import kotlinx.coroutines.flow.asStateFlow
 fun LobbyScreen(navController: NavController, model: GameModel) {
     val players by model.playerMap.asStateFlow().collectAsStateWithLifecycle()
     val games by model.gameMap.asStateFlow().collectAsStateWithLifecycle()
+    var hasGame = false
 
     Scaffold{ innerPadding ->
         Image(
@@ -44,12 +46,11 @@ fun LobbyScreen(navController: NavController, model: GameModel) {
                             Text("Player: ${player.name}")
                         },
                         trailingContent = {
-                            var hasGame = false
                             games.forEach { (gameId, game) ->
-                                if (game.player1Id == model.localPlayerId.value && game.gameState == GameState.Challange) {
+                                if (game.player1Id == model.localPlayerId.value && game.gameState == GameState.Challange && documentId == game.player2Id ) {
                                     Text("Sent...")
                                     hasGame = true
-                                } else if (game.player2Id == model.localPlayerId.value && game.gameState == GameState.Challange) {
+                                } else if (game.player2Id == model.localPlayerId.value && game.gameState == GameState.Challange && documentId == game.player1Id ) {
                                     Button(onClick = {
                                         model.db.collection("games").document(gameId)
                                             .update("gameState", GameState.player1_turn.toString())
@@ -60,6 +61,20 @@ fun LobbyScreen(navController: NavController, model: GameModel) {
                                         Text("Accept")
                                     }
                                     hasGame = true
+                                }
+                            }
+
+                            //if someone Challenge you
+                            if (!hasGame) {
+                                Button(onClick = {
+                                    model.db.collection("games")
+                                        .add(
+                                            Game(gameState = GameState.Challange,
+                                                player1Id = model.localPlayerId.value!!,
+                                                player2Id = documentId)
+                                        )
+                                }) {
+                                    Text("Challenge")
                                 }
                             }
 
