@@ -23,6 +23,17 @@ import com.example.tictactoeol.Model.GameModel
 import com.example.tictactoeol.R
 import kotlinx.coroutines.flow.asStateFlow
 
+
+/**
+ * Composable function that displays the lobby screen for the Tic-Tac-Toe app.
+ *
+ * The lobby screen shows the list of players currently registered in the game.
+ * It allows the current player to challenge another player to a game, accept challenges from other players,
+ * and automatically navigates to the game screen when a game starts or when the player accepts a challenge.
+ *
+ * @param navController The navigation controller used to navigate between screens.
+ * @param model The game model that provides the current game state, player data, and methods for interacting with Firestore.
+ */
 @Composable
 fun LobbyScreen(navController: NavController, model: GameModel) {
     val players by model.playerMap.asStateFlow().collectAsStateWithLifecycle()
@@ -71,7 +82,7 @@ fun LobbyScreen(navController: NavController, model: GameModel) {
                                 }
                             }
 
-                            //if someone Challenge you
+                            // button for challenge other player
                             if (!hasGame) {
                                 Button(onClick = {
                                     model.db.collection("games")

@@ -9,6 +9,15 @@ import com.example.tictactoeol.Screen.GameScreen
 import com.example.tictactoeol.Screen.HomeScreen
 import com.example.tictactoeol.Screen.LobbyScreen
 
+/**
+ * Composable function that sets up the navigation for the Tic-Tac-Toe game.
+ *
+ * Initializes the navigation controller and the game model, then defines the navigation structure
+ * for the app using [NavHost]. The app includes three screens:
+ * - **Home**: The home screen where the user can start a new game or join an existing one.
+ * - **Lobby**: The lobby screen for managing the game session.
+ * - **Game**: The game screen where the actual Tic-Tac-Toe game is played.
+ */
 @Composable
 fun TicTacToeNav(){
     val navController = rememberNavController()

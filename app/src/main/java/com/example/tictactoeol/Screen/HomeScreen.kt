@@ -35,6 +35,16 @@ import com.example.tictactoeol.DataClass.Player
 import com.example.tictactoeol.Model.GameModel
 import com.example.tictactoeol.R
 
+/**
+ * Composable function that displays the home screen for the Tic-Tac-Toe app.
+ *
+ * This screen allows the user to enter their player name and then proceed to the lobby if they have already registered or just created a new account.
+ * The app checks if the user has an existing player ID stored in shared preferences.
+ * If a player ID is found, they are automatically navigated to the lobby.
+ *
+ * @param navController The navigation controller used to navigate between screens.
+ * @param model The game model that provides game state and player data.
+ */
 @Composable
 fun HomeScreen(navController: NavController, model: GameModel){
     // sharedPreferences can be used to store and retrieve small app data, like user preferences.
@@ -112,11 +122,4 @@ fun HomeScreen(navController: NavController, model: GameModel){
             Spacer(modifier = Modifier.height(300.dp))
         }
     }
-
-
-
-
-
-
-
 }

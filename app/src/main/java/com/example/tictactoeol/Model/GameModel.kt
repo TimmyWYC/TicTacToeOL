@@ -15,6 +15,10 @@ class GameModel: ViewModel(){
     val playerMap = MutableStateFlow<Map<String, Player>>(emptyMap())
     val gameMap = MutableStateFlow<Map<String, Game>>(emptyMap())
 
+    /**
+     * Initializes the game by setting up listeners to Firestore collections.
+     * Listens for changes in players and games collections and updates local state.
+     */
     fun initGame() {
         // Listen for players
         db.collection("players")
@@ -45,6 +49,12 @@ class GameModel: ViewModel(){
             }
     }
 
+    /**
+     * Checks for a winner in a given game board.
+     *
+     * @param board A list representing the game board.
+     * @return 1 if player 1 wins, 2 if player 2 wins, 3 if the game is a draw, or 0 if no winner yet.
+     */
     fun checkForWinner(board: List<Int>): Int{
         if (board[0] != 0 && board[0] == board[1] && board[0] == board[2]){
             return board[0]
@@ -82,6 +92,12 @@ class GameModel: ViewModel(){
         return 0
     }
 
+    /**
+     * Checks the current state of a game and updates the game board and state if necessary.
+     *
+     * @param gameId The ID of the game to check.
+     * @param index The index of the board that the player is trying to mark.
+     */
     fun checkGameState(gameId: String?, index: Int){
         if (gameId != null) {
             val game: Game? = gameMap.value[gameId]
