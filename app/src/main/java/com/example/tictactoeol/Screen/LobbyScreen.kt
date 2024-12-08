@@ -1,6 +1,5 @@
 package com.example.tictactoeol.Screen
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -10,7 +9,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -30,6 +28,15 @@ fun LobbyScreen(navController: NavController, model: GameModel) {
     val players by model.playerMap.asStateFlow().collectAsStateWithLifecycle()
     val games by model.gameMap.asStateFlow().collectAsStateWithLifecycle()
     var hasGame = false
+
+    // look for if there is a games /
+    LaunchedEffect(games) {
+        games.forEach { (gameId, game) ->
+            if ((game.player1Id == model.localPlayerId.value || game.player2Id == model.localPlayerId.value) && (game.gameState == GameState.player1_turn || game.gameState == GameState.player2_turn)) {
+                navController.navigate("game/${gameId}")
+            }
+        }
+    }
 
     Scaffold{ innerPadding ->
         Image(
@@ -55,7 +62,7 @@ fun LobbyScreen(navController: NavController, model: GameModel) {
                                         model.db.collection("games").document(gameId)
                                             .update("gameState", GameState.player1_turn.toString())
                                             .addOnSuccessListener {
-                                                //Todo
+                                                navController.navigate("game/${gameId}")
                                             }
                                     }) {
                                         Text("Accept")
