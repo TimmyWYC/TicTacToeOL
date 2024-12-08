@@ -46,7 +46,7 @@ fun GameScreen(navController: NavController, model: GameModel, gameId: String?) 
 
     Scaffold { innerPadding ->
         Image(
-            painter = painterResource(id = R.drawable.bgi), // Replace with your image resource
+            painter = painterResource(id = R.drawable.bgi),
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxSize()

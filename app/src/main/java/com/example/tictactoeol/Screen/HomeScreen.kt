@@ -62,7 +62,7 @@ fun HomeScreen(navController: NavController, model: GameModel){
         modifier = Modifier.fillMaxSize()
     ) {
         Image(
-            painter = painterResource(id = R.drawable.bgi), // Replace with your image resource
+            painter = painterResource(id = R.drawable.bgi),
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxSize()

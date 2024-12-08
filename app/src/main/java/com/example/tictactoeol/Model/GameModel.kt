@@ -108,8 +108,10 @@ class GameModel: ViewModel(){
                 val board: MutableList<Int> = game.gameBoard.toMutableList()
                 var currentGameState = ""
 
+                //return if not my turn
                 if (!myTurn) return
 
+                //update the board
                 if (game.gameState == GameState.player1_turn) {
                     board[index] = 1
                     currentGameState = GameState.player2_turn.toString()
@@ -118,6 +120,7 @@ class GameModel: ViewModel(){
                     currentGameState = GameState.player1_turn.toString()
                 }
 
+                //See if somoeone has won
                 val winner = checkForWinner(board.toList())
                 if (winner == 1) {
                     currentGameState = GameState.player1_won.toString()
