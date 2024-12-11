@@ -112,10 +112,10 @@ class GameModel: ViewModel(){
                 if (!myTurn) return
 
                 //update the board
-                if (game.gameState == GameState.player1_turn) {
+                if (game.gameState == GameState.player1_turn && board[index] == 0) {
                     board[index] = 1
                     currentGameState = GameState.player2_turn.toString()
-                } else if (game.gameState == GameState.player2_turn) {
+                } else if (game.gameState == GameState.player2_turn && board[index] == 0) {
                     board[index] = 2
                     currentGameState = GameState.player1_turn.toString()
                 }
